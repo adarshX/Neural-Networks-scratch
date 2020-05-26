@@ -16,7 +16,6 @@ X_huge = input_data.to_numpy()
 #print(X_huge)
 
 
-
 # load data2 (lesser size data)
 X = pd.read_csv("X.csv")
 #print(X)
@@ -29,8 +28,6 @@ y = y.to_numpy()
 for i in range(len(y)):
 	if y[i] == 10 :
 		y[i] = 0
-
-
 
 ## Data variables 
 def Data_var(X):
@@ -52,7 +49,6 @@ def sigmoid_diff(z):
 	a = sigmoid(z)
 	g = a.dot(1-a)
 	return g
-
 
 ## weight(Theta) initilisation
 def random_init(s , s1):
@@ -96,7 +92,6 @@ def forward(X,Theta,input_units,output_units,hidden_layers,hidden_units,m):
 		a[0] = np.append( np.ones((m,1)) , a[0] ,axis = 1)  # adding ones at start of matrix
 	if(m == 1):
 		a[0] = np.append( np.ones(m) , a[0] ,axis = 0) 
-
 
 	# hidden layers
 	for l in range(1 , total_layers-1):
@@ -178,7 +173,6 @@ def back_propogation(X , Y , Theta, input_units,output_units,hidden_layers,hidde
 
 	for i in range(len(Theta)) :
 		DEL[i] = (1/m) * DEL[i]
-
 	return DEL
 
 
@@ -196,6 +190,7 @@ def gradient_descent(X,Y,Theta , input_units,output_units,hidden_layers,hidden_u
 	print("Final cost function = ",J_prev,"--> obtained at epoch",t)
 	return Theta
 
+
 def predictions(X,Theta , input_units,output_units,hidden_layers,hidden_units) : 
 	m = len(X)
 	a = forward(X,Theta,input_units,output_units,hidden_layers,hidden_units,m)
@@ -204,8 +199,6 @@ def predictions(X,Theta , input_units,output_units,hidden_layers,hidden_units) :
 	pred = np.argmax(h , axis = 1) # max probability
 	return pred
 
-
-
 def main() :
 
 	# NN and hidden layer - configuration
@@ -213,23 +206,22 @@ def main() :
 	input_units , output_units = NN_arch(X,k)
 	hidden_layers = 1   #should be changed accordingly 
 	hidden_units = 25   #should be changed accordingly
-
 	
 	total_layers = 1 + hidden_layers + 1
 	last = total_layers-1
 
 	m ,n_f = Data_var(X)
-	print(m)
-	print(n_f)
+	#print(m,n_f)
 
 	# intial forward propgation and predict values
 	init_Theta =  weight_init(input_units,output_units,hidden_layers,hidden_units)
 	a = forward(X,init_Theta,input_units,output_units,hidden_layers,hidden_units,len(X))
 	h = a[last] # predict values
-	print(h)
-	print(np.shape(h))
+	#print(h)
+	#print(np.shape(h))
 	#print(y)
 	#print(np.shape(y))
+	print("Initial Theta")
 	print(init_Theta)
 
 
@@ -254,16 +246,16 @@ def main() :
 	alpha = 0.01 #configurable
 	start = timeit.default_timer()
 	final_Theta = gradient_descent(X,Y,init_Theta , input_units,output_units,hidden_layers,hidden_units,epochs,alpha )
-	print("------------")
-	#print(final_Theta)
+	print("------------------------------")
+	print(final_Theta)
 	stop = timeit.default_timer()
 	print('Time taken for gradient descent', stop - start , "secs")
 
 
 	# Predictions
 	predict = predictions(X,final_Theta , input_units,output_units,hidden_layers,hidden_units)
-	print(predict)
-	print(np.shape(predict))
+	print("Predcitions :" ,predict)
+	#print(np.shape(predict))
 
 	# Accuracy
 	check = np.zeros(m)
