@@ -1,9 +1,6 @@
 import numpy as np
-import os
 import timeit
 import matplotlib.pyplot as plt
-import sys   
-import pprint 
 import pandas as pd
 import math
 
